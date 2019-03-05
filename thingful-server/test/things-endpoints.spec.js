@@ -1,3 +1,5 @@
+'use strict'; 
+
 const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
@@ -71,7 +73,7 @@ describe('Things Endpoints', function() {
   describe(`GET /api/things/:thing_id`, () => {
     context(`Given no things`, () => {
       before('insert things', () =>
-        helpers.seedThingsTables(db, testUsers, testThings)
+        helpers.seedUsers(db, testUsers)
       );
       it(`responds with 404`, () => {
         const thingId = 123456;
@@ -128,7 +130,7 @@ describe('Things Endpoints', function() {
   describe(`GET /api/things/:thing_id/reviews`, () => {
     context(`Given no things`, () => {
       beforeEach('insert things', () =>
-        helpers.seedThingsTables(db, testUsers)
+        helpers.seedUsers(db, testUsers)
       );
       it(`responds with 404`, () => {
         const thingId = 123456;
