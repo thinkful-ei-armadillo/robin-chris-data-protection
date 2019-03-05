@@ -207,7 +207,7 @@ function makeExpectedThingReviews(users, thingId, reviews) {
 function makeMaliciousThing(user) {
   const maliciousThing = {
     id: 911,
-    image: 'http://placehold.it/500x500',
+    image: 'http://placehseedThingsTableold.it/500x500',
     date_created: new Date().toISOString(),
     title: 'Naughty naughty very naughty <script>alert("xss");</script>',
     user_id: user.id,
@@ -225,7 +225,7 @@ function makeMaliciousThing(user) {
   };
 }
 
-function makeThingsFixtures() {
+function makeThingsFixtures() { .then(() => db.into('thingful_users').insert(user))
   const testUsers = makeUsersArray();
   const testThings = makeThingsArray(testUsers);
   const testReviews = makeReviewsArray(testUsers, testThings);
@@ -243,15 +243,13 @@ function cleanTables(db) {
 }
 
 function seedThingsTables(db, users, things, reviews = []) {
-  return seedUsers(db, [users])
+  return seedUsers(db, users)
     .then(() => db.into('thingful_things').insert(things))
     .then(() => reviews.length && db.into('thingful_reviews').insert(reviews));
 }
 
 function seedMaliciousThing(db, user, thing) {
-  return db
-    .into('thingful_users')
-    .insert([user])
+  return seedUsers(db, [user])
     .then(() => db.into('thingful_things').insert([thing]));
 }
 
